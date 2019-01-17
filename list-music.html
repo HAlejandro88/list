@@ -1,0 +1,121 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icons/hardware-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../polymer/elements/lib/dom-repeat.html">
+<dom-module id="list-music">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: rgba(14, 1, 68, 0.2);
+      }
+      #albumImage img{
+        float: left;
+        border-radius: 10px;
+        box-shadow: 8px, 8px,black;
+        padding: 0;
+        width: 45%;
+        animation: cambio 20s infinite alternate linear
+      }
+      #albumImage img hover .move-right{
+        cursor: pointer;
+        transform: translate(350px,0);
+        -webkit-transform: translate(350px,0); 
+        -o-transform: translate(350px,0); 
+        -moz-transform: translate(350px,0); 
+      }
+      .canciones{
+        display: inline-block;
+      }
+      .canciones li{
+        list-style: none;
+        cursor: pointer;
+      }
+    </style>
+    <h1>[[albumName]]</h1>
+    <div id="albumImage">
+      <img src="{{albumImage}}">
+      <p>[[albumDescription]]</p>
+    
+      <ul class="canciones">
+        <li><paper-button on-tap="play" id="play1"><iron-icon icon="{{cancion}}" id="ico"></iron-icon>Cancion1</paper-button></li>
+        <li><paper-button on-tap="play2"><iron-icon icon="{{cancion1}}"></iron-icon>Cancion2</paper-button></li>
+        <li><paper-button on-tap=""><iron-icon icon="{{cancion}}"></iron-icon>Cancion3</paper-button></li>
+        <li><paper-button on-tap=""><iron-icon icon="{{cancion}}"></iron-icon>Cancion4</paper-button></li>
+        <li><paper-button on-tap=""><iron-icon icon="{{cancion}}"></iron-icon>Cancion5</paper-button></li>
+      </ul>
+    </div>  
+    <dom-repeat items=[[songs]] as="song">
+      <template>
+        <paper-button on-tap="play" id="play1" ><iron-icon icon="{{song.ico}}" id="ico"></iron-icon>[[song]]</paper-button>
+      </template>
+    </dom-repeat> 
+</template>
+  <script>
+    /**
+     * `list-music`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ListMusic extends Polymer.Element {
+      static get is() { return 'list-music'; }
+      static get properties() {
+        return {
+          albumImage: {
+            type: String,
+            value: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OpPPGmGeHIAmnBPIlUF6JRSATSOJMbifo7slPNHSwJtf5LPPAQ'
+          },
+          albunArtist:{
+            type: String,
+            value: ''
+          },
+          AlbumName:{
+            type: String,
+            value: ''
+          },
+          albumDescription:{
+            type:String,
+            value: ''
+          },
+          cancion:{
+            type: String,
+            value: 'av:play-circle-filled'
+          },
+          cancion1:{
+            type: String,
+            value: 'av:play-circle-filled'
+          },
+          songs:{
+            type: Array,
+            value(){
+              return [
+                "cancion1"
+              ]
+            }
+          }
+        };
+      }
+      play(){
+        
+        }
+      _help(valor){
+        valor = valor*1;
+        if(valor == 1){
+          this.set("cancion","av:pause-circle-filled");
+        }else{
+          this.set("cancion","av:play-circle-filled");
+        }
+      }  
+      play2(){
+        this.set("cancion1","av:pause-circle-filled");
+      }  
+      
+    }
+
+    window.customElements.define(ListMusic.is, ListMusic);
+  </script>
+</dom-module>
